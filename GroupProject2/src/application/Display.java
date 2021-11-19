@@ -1,5 +1,6 @@
 package application;
 
+import HomeSecurity.SecuritySystem;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,9 +8,21 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Display extends Application {
+
+	private SecuritySystem securitySystem;
+
+	public SecuritySystem getSecuritySystem() {
+		return securitySystem;
+	}
+
+	public void setSecuritySystem(SecuritySystem securitySystem) {
+		this.securitySystem = securitySystem;
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -52,10 +65,13 @@ public class Main extends Application {
 			zones.add(cancel, 5, 0);
 			zones.setHgap(10);
 
+			Text status = new Text("Status: Armed");
+
 			mainPane.add(numPad, 0, 0);
 			mainPane.add(text, 1, 0);
 			mainPane.add(zones, 0, 1, 2, 1);
 			mainPane.add(new Button("Motion Detector"), 0, 2);
+			mainPane.add(status, 0, 3);
 
 			scene = new Scene(mainPane, 500, 220);
 
