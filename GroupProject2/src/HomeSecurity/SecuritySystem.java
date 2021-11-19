@@ -8,6 +8,7 @@ public class SecuritySystem {
 		ARMED_STATE, ALERTED_STATE,
 	};
 
+	private int timeLeft;
 	private States currentState;
 	private static SecuritySystem instance;
 	private Display display;
@@ -16,8 +17,10 @@ public class SecuritySystem {
 		currentState = States.DISARMED_STATE;
 		display = new Display();
 		display.setSecuritySystem(this);
+		timeLeft = 0;
 	}
 
+	//singleton
 	public static SecuritySystem getInstance() {
 		if (instance == null) {
 			return instance = new SecuritySystem();
@@ -25,4 +28,7 @@ public class SecuritySystem {
 		return instance;
 	}
 
+	public void clockTicked() {
+		//TODO? possibly don't need this
+	}
 }

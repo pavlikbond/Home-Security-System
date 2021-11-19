@@ -1,7 +1,12 @@
 package application;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import HomeSecurity.SecuritySystem;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -11,9 +16,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Display extends Application {
+public class Display extends Application implements EventHandler<ActionEvent> {
+	private int time;
 
 	private SecuritySystem securitySystem;
+	private CheckBox zone1 = new CheckBox("Zone 1");
+	private CheckBox zone2 = new CheckBox("Zone 2");
+	private CheckBox zone3 = new CheckBox("Zone 3");
+
+	private Button stay = new Button("Stay");
+	private Button away = new Button("Away");
+	private Button cancel = new Button("Cancel");
+
+	private Text timer = new Text("Timer: 00 seconds");
 
 	public SecuritySystem getSecuritySystem() {
 		return securitySystem;
@@ -47,15 +62,6 @@ public class Display extends Application {
 			text.setPrefHeight(100);
 			text.setPrefWidth(400);
 
-			//checkboxes and a few buttons
-			CheckBox zone1 = new CheckBox("Zone 1");
-			CheckBox zone2 = new CheckBox("Zone 2");
-			CheckBox zone3 = new CheckBox("Zone 3");
-
-			Button stay = new Button("Stay");
-			Button away = new Button("Away");
-			Button cancel = new Button("Cancel");
-
 			GridPane zones = new GridPane();
 			zones.add(zone1, 0, 0);
 			zones.add(zone2, 1, 0);
@@ -63,20 +69,29 @@ public class Display extends Application {
 			zones.add(stay, 3, 0);
 			zones.add(away, 4, 0);
 			zones.add(cancel, 5, 0);
+			zones.add(timer, 6, 0);
 			zones.setHgap(10);
 
+			Button motionBtn = new Button("Motion Detector");
 			Text status = new Text("Status: Armed");
 
 			mainPane.add(numPad, 0, 0);
 			mainPane.add(text, 1, 0);
 			mainPane.add(zones, 0, 1, 2, 1);
-			mainPane.add(new Button("Motion Detector"), 0, 2);
+			mainPane.add(motionBtn, 0, 2);
 			mainPane.add(status, 0, 3);
+
+			//action listeners
+			zone1.setOnAction(this);
+			zone2.setOnAction(this);
+			zone3.setOnAction(this);
+			stay.setOnAction(this);
+			away.setOnAction(this);
+			cancel.setOnAction(this);
+			motionBtn.setOnAction(this);
 
 			scene = new Scene(mainPane, 500, 220);
 
-			//			root.setLeft(numPad);
-			//			root.setRight(text);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
@@ -89,6 +104,36 @@ public class Display extends Application {
 	}
 
 	public static void main(String[] args) {
+		SecuritySystem.getInstance();
 		launch(args);
+
+	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getSource().equals(stay)) {
+			//TODO
+		}
+		if (event.getSource().equals(away)) {
+			//TODO
+			time = 60;
+			Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					if (time == 0) {
+						timer.cancel();
+					}
+					displayTimer(time--);
+				}
+			}, 0, 1000);
+		}
+		if (event.getSource().equals(cancel)) {
+			//TODO
+		}
+	}
+
+	public void displayTimer(int seconds) {
+		timer.setText("Timer: " + seconds + " seconds");
 	}
 }
