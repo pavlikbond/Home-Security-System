@@ -16,8 +16,13 @@ public class SecuritySystem {
 	private SecuritySystem() {
 		currentState = States.DISARMED_STATE;
 		display = new Display();
-		display.setSecuritySystem(this);
+
 		timeLeft = 0;
+	}
+
+	public static void main(String[] args) {
+		Display display = new Display();
+
 	}
 
 	//singleton
