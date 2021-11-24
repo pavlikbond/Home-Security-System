@@ -1,122 +1,184 @@
 package application;
 
-import java.awt.Dimension;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import HomeSecurity.SecuritySystemContext;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-public class Display {
+public class Display extends Application implements EventHandler<ActionEvent> {
+	public static final CountDownLatch latch = new CountDownLatch(1);
+	public static Display display = null;
 
-	private JFrame frame;
-	private final JTextField txtReady = new JTextField();
-	private JButton btn1;
-	private JButton btn2;
-	private JButton btn3;
-	private JButton btn4;
-	private JButton btn5;
-	private JButton btn6;
-	private JButton btn7;
-	private JButton btn8;
-	private JButton btn9;
-	private JButton btn0;
-	private JCheckBox zone1;
-	private JCheckBox zone2;
-	private JCheckBox zone3;
-	private JButton btnStay;
-	private JButton btnAway;
-	private JButton btnCancel;
-	private JButton btnMotionDetector;
-	private JLabel statusLabel;
+	private int time;
+
+	private static SecuritySystemContext securitySystem;
+	private CheckBox zone1 = new CheckBox("Zone 1");
+	private CheckBox zone2 = new CheckBox("Zone 2");
+	private CheckBox zone3 = new CheckBox("Zone 3");
+
+	private Button stay = new Button("Stay");
+	private Button away = new Button("Away");
+	private Button cancel = new Button("Cancel");
+
+	private Text timer = new Text("Timer: 00 seconds");
+
+	public SecuritySystemContext getSecuritySystem() {
+		return securitySystem;
+	}
+
+	public void setSecuritySystem(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
+
+	public static Display waitForDisplay() {
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return display;
+	}
+
+	public static void setDisplay(Display setDisplay) {
+		display = setDisplay;
+		latch.countDown();
+	}
 
 	public Display() {
-		frame = new JFrame();
-		frame.getContentPane().setLayout(null);
-		Dimension screenSize = new Dimension(625, 300);
-		frame.setPreferredSize(screenSize);
+		setDisplay(this);
+	}
 
-		btn1 = new JButton("1");
-		btn1.setBounds(10, 0, 42, 39);
-		frame.getContentPane().add(btn1);
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			BorderPane root = new BorderPane();
+			Scene scene = new Scene(root, 400, 400);
 
-		btn2 = new JButton("2");
-		btn2.setBounds(52, 0, 42, 39);
-		frame.getContentPane().add(btn2);
+			primaryStage.setTitle("Security System");
+			GridPane mainPane = new GridPane();
 
-		btn3 = new JButton("3");
-		btn3.setBounds(90, 0, 42, 39);
-		frame.getContentPane().add(btn3);
+			//Here is the Number Pad, I do have two blank buttons on there though. Got to fix that
+			String[] keys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+			GridPane numPad = new GridPane();
+			for (int i = 0; i < 9; i++) {
+				Button button = new Button(keys[i]);
+				numPad.add(button, i % 3, (int) Math.ceil(i / 3));
+			}
+			Button button0 = new Button("0");
+			numPad.add(button0, 1, 3);
 
-		btn4 = new JButton("4");
-		btn4.setBounds(10, 38, 42, 39);
-		frame.getContentPane().add(btn4);
+			TextField text = new TextField();
+			text.setPromptText("Password goes here?");
+			text.setPrefHeight(100);
+			text.setPrefWidth(400);
 
-		btn5 = new JButton("5");
-		btn5.setBounds(52, 38, 42, 39);
-		frame.getContentPane().add(btn5);
+			GridPane zones = new GridPane();
+			zones.add(zone1, 0, 0);
+			zones.add(zone2, 1, 0);
+			zones.add(zone3, 2, 0);
+			zones.add(stay, 3, 0);
+			zones.add(away, 4, 0);
+			zones.add(cancel, 5, 0);
+			zones.add(timer, 6, 0);
+			zones.setHgap(10);
 
-		btn6 = new JButton("6");
-		btn6.setBounds(90, 38, 42, 39);
-		frame.getContentPane().add(btn6);
+			Button motionBtn = new Button("Motion Detector");
+			Text status = new Text("Status: Armed");
 
-		btn7 = new JButton("7");
-		btn7.setBounds(10, 76, 42, 39);
-		frame.getContentPane().add(btn7);
+			mainPane.add(numPad, 0, 0);
+			mainPane.add(text, 1, 0);
+			mainPane.add(zones, 0, 1, 2, 1);
+			mainPane.add(motionBtn, 0, 2);
+			mainPane.add(status, 0, 3);
 
-		btn8 = new JButton("8");
-		btn8.setBounds(52, 76, 42, 39);
-		frame.getContentPane().add(btn8);
+			//action listeners
+			zone1.setOnAction(this);
+			zone2.setOnAction(this);
+			zone3.setOnAction(this);
+			stay.setOnAction(this);
+			away.setOnAction(this);
+			cancel.setOnAction(this);
+			motionBtn.setOnAction(this);
 
-		btn9 = new JButton("9");
-		btn9.setBounds(90, 76, 42, 39);
-		frame.getContentPane().add(btn9);
+			scene = new Scene(mainPane, 500, 220);
 
-		btn0 = new JButton("0");
-		btn0.setBounds(52, 113, 42, 39);
-		frame.getContentPane().add(btn0);
-		txtReady.setText("Ready");
-		txtReady.setBounds(147, 0, 462, 160);
-		frame.getContentPane().add(txtReady);
-		txtReady.setColumns(10);
+			primaryStage.setScene(scene);
+			primaryStage.show();
 
-		zone1 = new JCheckBox("Zone 1");
-		zone1.setBounds(10, 177, 70, 23);
-		frame.getContentPane().add(zone1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error in launch");
+		}
+	}
 
-		zone2 = new JCheckBox("Zone 2");
-		zone2.setBounds(78, 177, 70, 23);
-		frame.getContentPane().add(zone2);
+	@Override
+	public void handle(ActionEvent event) {
+		if (event.getSource().equals(stay)) {
+			//TODO
+		}
+		if (event.getSource().equals(away)) {
+			//we might have to move timer into context and use clock class like in the book?
+			time = 60;
+			Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					if (time == 0) {
+						timer.cancel();
+					}
+					displayTimer(time--);
+				}
+			}, 0, 1000);
+		}
+		if (event.getSource().equals(cancel)) {
+			securitySystem.pressCancel();
+		}
+		if (event.getSource().equals(zone1) || event.getSource().equals(zone2) || event.getSource().equals(zone3)) {
+			if (isAnyDoorOpen()) {
+				securitySystem.zonesOpen();
+			}
+		}
+	}
 
-		zone3 = new JCheckBox("Zone 3");
-		zone3.setBounds(150, 177, 70, 23);
-		frame.getContentPane().add(zone3);
+	private boolean isAnyDoorOpen() {
+		if (!zone1.isSelected() || !zone2.isSelected() || !zone3.isSelected()) {
+			return true;
+		}
+		return false;
+	}
 
-		btnStay = new JButton("Stay");
-		btnStay.setBounds(246, 177, 89, 23);
-		frame.getContentPane().add(btnStay);
+	public static void main(String[] args) {
+		securitySystem = SecuritySystemContext.getInstance();
+		display.setsDisplay();
+		Application.launch(args);
+	}
 
-		btnAway = new JButton("Away");
-		btnAway.setBounds(345, 177, 89, 23);
-		frame.getContentPane().add(btnAway);
+	//sends a reference of itself to SS
+	public void setsDisplay() {
+		securitySystem.setDisplay(this);
+	}
 
-		btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(497, 177, 89, 23);
-		frame.getContentPane().add(btnCancel);
+	//test method TODO: delete
+	public void printStuff() {
+		System.out.println("Calling method from outside class");
+	}
 
-		btnMotionDetector = new JButton("Motion Detector");
-		btnMotionDetector.setBounds(10, 227, 138, 23);
-		frame.getContentPane().add(btnMotionDetector);
-
-		statusLabel = new JLabel("Status: Ready");
-		statusLabel.setBounds(10, 207, 151, 14);
-		frame.getContentPane().add(statusLabel);
-
-		frame.setTitle("Home Security System");
-		frame.setVisible(true);
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+	public void displayTimer(int seconds) {
+		timer.setText("Timer: " + seconds + " seconds");
 	}
 }

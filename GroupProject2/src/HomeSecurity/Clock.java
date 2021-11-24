@@ -1,10 +1,10 @@
 package HomeSecurity;
 
 public class Clock implements Runnable {
-	private static SecuritySystem securitySystem;
+	private static SecuritySystemContext securitySystem;
 
 	public Clock() {
-		securitySystem = SecuritySystem.getInstance();
+		securitySystem = SecuritySystemContext.getInstance();
 		new Thread(this).start();
 	}
 
