@@ -17,19 +17,7 @@ public class Alerted extends HomeSecurityState {
 	}
 
 	@Override
-	public void zonesClose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void pressStay() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pressCancel() {
 		// TODO Auto-generated method stub
 
 	}
@@ -49,19 +37,18 @@ public class Alerted extends HomeSecurityState {
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-
-	}
-
-	@Override
-	public void passwordIncorrect() {
-		// TODO Auto-generated method stub
-
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public String toString() {
+		return "Alerted";
 	}
 
 }

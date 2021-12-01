@@ -17,27 +17,15 @@ public class Disarmed extends HomeSecurityState {
 	}
 
 	@Override
-	public void zonesClose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void pressStay() {
 		securitySystem.changeCurrentState(securitySystem.getStay());
-
-	}
-
-	@Override
-	public void pressCancel() {
-		// TODO Auto-generated method stub
-
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void pressAway() {
 		securitySystem.changeCurrentState(securitySystem.getAway());
-
+		securitySystem.displayState();
 	}
 
 	@Override
@@ -53,15 +41,14 @@ public class Disarmed extends HomeSecurityState {
 	}
 
 	@Override
-	public void passwordIncorrect() {
+	public void timerRunsOut() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void timerRunsOut() {
-		// TODO Auto-generated method stub
-
+	public String toString() {
+		return "Disarmed";
 	}
 
 }

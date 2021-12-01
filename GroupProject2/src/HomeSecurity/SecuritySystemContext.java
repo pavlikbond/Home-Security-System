@@ -2,12 +2,10 @@ package HomeSecurity;
 
 import States.Alerted;
 import States.Away;
-import States.Counting;
 import States.Disarmed;
 import States.HomeSecurityState;
 import States.Stay;
-import States.ZonesClosed;
-import States.ZonesOpen;
+import States.Warning;
 import application.Display;
 
 public class SecuritySystemContext {
@@ -18,11 +16,10 @@ public class SecuritySystemContext {
 
 	private HomeSecurityState alerted;
 	private HomeSecurityState away;
-	private HomeSecurityState counting;
+	private HomeSecurityState warning;
 	private HomeSecurityState disarmed;
 	private HomeSecurityState stay;
-	private HomeSecurityState zonesClosed;
-	private HomeSecurityState zonesOpen;
+	private boolean doorsOpen; //true means a door is open, false means a door is closed
 
 	private SecuritySystemContext() {
 
@@ -37,17 +34,15 @@ public class SecuritySystemContext {
 		display = new Display();
 		display.setSecuritySystem(this);
 		timeLeft = 0;
-
 	}
 
 	public void makeStates() {
 		this.alerted = new Alerted(this);
 		this.away = new Away(this);
-		this.counting = new Counting(this);
+		this.warning = new Warning(this);
 		this.disarmed = new Disarmed(this);
 		this.stay = new Stay(this);
-		this.zonesClosed = new ZonesClosed(this);
-		this.zonesOpen = new ZonesOpen(this);
+		currentState = stay;
 	}
 
 	// singleton
@@ -60,6 +55,10 @@ public class SecuritySystemContext {
 
 	public void changeCurrentState(HomeSecurityState state) {
 		currentState = state;
+	}
+
+	public HomeSecurityState getCurrentState() {
+		return this.currentState;
 	}
 
 	public void clockTicked() {
@@ -75,16 +74,8 @@ public class SecuritySystemContext {
 		currentState.zonesOpen();
 	}
 
-	public void zonesClose() {
-		currentState.zonesClose();
-	}
-
 	public void pressStay() {
 		currentState.pressStay();
-	}
-
-	public void pressCancel() {
-		currentState.pressCancel();
 	}
 
 	public void pressAway() {
@@ -99,10 +90,6 @@ public class SecuritySystemContext {
 		currentState.passwordCorrect();
 	}
 
-	public void passwordIncorrect() {
-		currentState.passwordIncorrect();
-	}
-
 	public void timerRunsOut() {
 		currentState.timerRunsOut();
 	}
@@ -115,8 +102,8 @@ public class SecuritySystemContext {
 		return away;
 	}
 
-	public HomeSecurityState getCounting() {
-		return counting;
+	public HomeSecurityState getWarning() {
+		return warning;
 	}
 
 	public HomeSecurityState getDisarmed() {
@@ -127,12 +114,16 @@ public class SecuritySystemContext {
 		return stay;
 	}
 
-	public HomeSecurityState getZonesClosed() {
-		return zonesClosed;
+	public void displayState() {
+		display.display(currentState.toString());
 	}
 
-	public HomeSecurityState getZonesOpen() {
-		return zonesOpen;
+	public void setDoorsOpen(boolean status) {
+		this.doorsOpen = status;
+	}
+
+	public boolean isDoorOpen() {
+		return this.doorsOpen;
 	}
 
 }

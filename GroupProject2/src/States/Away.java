@@ -12,56 +12,43 @@ public class Away extends HomeSecurityState {
 
 	@Override
 	public void zonesOpen() {
-		securitySystem.changeCurrentState(securitySystem.getCounting());
-
-	}
-
-	@Override
-	public void zonesClose() {
-		// TODO Auto-generated method stub
-
+		securitySystem.changeCurrentState(securitySystem.getWarning());
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void pressStay() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pressCancel() {
-		// TODO Auto-generated method stub
-
+		//nothing happens
 	}
 
 	@Override
 	public void pressAway() {
-		// TODO Auto-generated method stub
-
+		// nothing happens
 	}
 
 	@Override
 	public void motionDetected() {
-		securitySystem.changeCurrentState(securitySystem.getCounting());
-
+		securitySystem.changeCurrentState(securitySystem.getWarning());
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-
-	}
-
-	@Override
-	public void passwordIncorrect() {
-		// TODO Auto-generated method stub
-
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
-		// TODO Auto-generated method stub
+		if (securitySystem.isDoorOpen()) {
+			securitySystem.changeCurrentState(securitySystem.getDisarmed());
+			securitySystem.displayState();
+		}
+	}
 
+	@Override
+	public String toString() {
+		return "Away";
 	}
 
 }

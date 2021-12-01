@@ -1,7 +1,5 @@
 package application;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 import HomeSecurity.SecuritySystemContext;
@@ -14,7 +12,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Display extends Application implements EventHandler<ActionEvent> {
@@ -31,8 +28,8 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	private Button stay = new Button("Stay");
 	private Button away = new Button("Away");
 	private Button cancel = new Button("Cancel");
-
-	private Text timer = new Text("Timer: 00 seconds");
+	private Button motionBtn;
+	private TextField text;
 
 	public SecuritySystemContext getSecuritySystem() {
 		return securitySystem;
@@ -80,8 +77,8 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			Button button0 = new Button("0");
 			numPad.add(button0, 1, 3);
 
-			TextField text = new TextField();
-			text.setPromptText("Password goes here?");
+			text = new TextField();
+			text.setText("Disarmed");
 			text.setPrefHeight(100);
 			text.setPrefWidth(400);
 
@@ -92,17 +89,14 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			zones.add(stay, 3, 0);
 			zones.add(away, 4, 0);
 			zones.add(cancel, 5, 0);
-			zones.add(timer, 6, 0);
 			zones.setHgap(10);
 
-			Button motionBtn = new Button("Motion Detector");
-			Text status = new Text("Status: Armed");
+			motionBtn = new Button("Motion Detector");
 
 			mainPane.add(numPad, 0, 0);
 			mainPane.add(text, 1, 0);
 			mainPane.add(zones, 0, 1, 2, 1);
 			mainPane.add(motionBtn, 0, 2);
-			mainPane.add(status, 0, 3);
 
 			// action listeners
 			zone1.setOnAction(this);
@@ -130,31 +124,18 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getSource().equals(stay)) {
-			// TODO
+			securitySystem.pressStay();
+		} else if (event.getSource().equals(away)) {
+			securitySystem.pressAway();
+		} else if (event.getSource().equals(motionBtn)) {
+			securitySystem.motionDetected();
+		} else if (event.getSource().equals(zone1) || event.getSource().equals(zone2)
+				|| event.getSource().equals(zone3)) {
+			securitySystem.setDoorsOpen(isAnyDoorOpen());
 		}
-		if (event.getSource().equals(away)) {
-			// we might have to move timer into context and use clock class like in the
-			// book?
-			time = 60;
-			Timer timer = new Timer();
-			timer.scheduleAtFixedRate(new TimerTask() {
-				@Override
-				public void run() {
-					if (time == 0) {
-						timer.cancel();
-					}
-					displayTimer(time--);
-				}
-			}, 0, 1000);
-		}
-		if (event.getSource().equals(cancel)) {
-			securitySystem.pressCancel();
-		}
-		if (event.getSource().equals(zone1) || event.getSource().equals(zone2) || event.getSource().equals(zone3)) {
-			if (isAnyDoorOpen()) {
-				securitySystem.zonesOpen();
-			}
-		}
+		//need event listeners for each numpad button and a system to track the password entered
+		//have to move the numbers out of the methods
+
 	}
 
 	private boolean isAnyDoorOpen() {
@@ -181,7 +162,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		System.out.println("Calling method from outside class");
 	}
 
-	public void displayTimer(int seconds) {
-		timer.setText("Timer: " + seconds + " seconds");
+	public void display(String string) {
+		text.setText(string);
 	}
 }

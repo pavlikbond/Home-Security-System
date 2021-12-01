@@ -13,23 +13,11 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void zonesOpen() {
 		securitySystem.changeCurrentState(securitySystem.getAlerted());
-
-	}
-
-	@Override
-	public void zonesClose() {
-		// TODO Auto-generated method stub
-
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void pressStay() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pressCancel() {
 		// TODO Auto-generated method stub
 
 	}
@@ -49,19 +37,20 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-
-	}
-
-	@Override
-	public void passwordIncorrect() {
-		// TODO Auto-generated method stub
-
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
-		// TODO Auto-generated method stub
-
+		//if doors are open when timers runs out, change state to disarmed
+		if (securitySystem.isDoorOpen()) {
+			securitySystem.changeCurrentState(securitySystem.getDisarmed());
+			securitySystem.displayState();
+		}
 	}
 
+	@Override
+	public String toString() {
+		return "Stay";
+	}
 }

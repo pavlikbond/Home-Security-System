@@ -2,11 +2,11 @@ package States;
 
 import HomeSecurity.SecuritySystemContext;
 
-public class ZonesOpen extends HomeSecurityState {
+public class Warning extends HomeSecurityState {
 
 	SecuritySystemContext securitySystem;
 
-	public ZonesOpen(SecuritySystemContext securitySystem) {
+	public Warning(SecuritySystemContext securitySystem) {
 		this.securitySystem = securitySystem;
 	}
 
@@ -17,19 +17,7 @@ public class ZonesOpen extends HomeSecurityState {
 	}
 
 	@Override
-	public void zonesClose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void pressStay() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pressCancel() {
 		// TODO Auto-generated method stub
 
 	}
@@ -48,20 +36,18 @@ public class ZonesOpen extends HomeSecurityState {
 
 	@Override
 	public void passwordCorrect() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void passwordIncorrect() {
-		// TODO Auto-generated method stub
-
+		securitySystem.changeCurrentState(securitySystem.getDisarmed());
+		securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
-		// TODO Auto-generated method stub
-
+		securitySystem.changeCurrentState(securitySystem.getAlerted());
+		securitySystem.displayState();
 	}
 
+	@Override
+	public String toString() {
+		return "Warning";
+	}
 }
