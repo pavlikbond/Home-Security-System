@@ -6,7 +6,7 @@ public abstract class HomeSecurityState {
 	protected static SecuritySystemContext context;
 
 	protected HomeSecurityState() {
-		context.getInstance();
+		context = SecuritySystemContext.getInstance();
 	}
 
 	public void zonesOpen() {

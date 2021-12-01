@@ -1,10 +1,18 @@
 package States;
 
+import HomeSecurity.SecuritySystemContext;
+
 public class Stay extends HomeSecurityState {
+
+	SecuritySystemContext securitySystem;
+
+	public Stay(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
 
 	@Override
 	public void zonesOpen() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getAlerted());
 
 	}
 
@@ -40,7 +48,7 @@ public class Stay extends HomeSecurityState {
 
 	@Override
 	public void passwordCorrect() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getDisarmed());
 
 	}
 

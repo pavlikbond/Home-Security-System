@@ -1,6 +1,15 @@
 package States;
 
+import HomeSecurity.SecuritySystemContext;
+
 public class Counting extends HomeSecurityState {
+
+	SecuritySystemContext securitySystem;
+
+	public Counting(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
+
 	@Override
 	public void zonesOpen() {
 		// TODO Auto-generated method stub
@@ -39,7 +48,7 @@ public class Counting extends HomeSecurityState {
 
 	@Override
 	public void passwordCorrect() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getDisarmed());
 
 	}
 
@@ -51,7 +60,7 @@ public class Counting extends HomeSecurityState {
 
 	@Override
 	public void timerRunsOut() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getAlerted());
 
 	}
 }

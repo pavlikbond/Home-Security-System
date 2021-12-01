@@ -69,7 +69,8 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			primaryStage.setTitle("Security System");
 			GridPane mainPane = new GridPane();
 
-			//Here is the Number Pad, I do have two blank buttons on there though. Got to fix that
+			// Here is the Number Pad, I do have two blank buttons on there though. Got to
+			// fix that
 			String[] keys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 			GridPane numPad = new GridPane();
 			for (int i = 0; i < 9; i++) {
@@ -103,7 +104,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			mainPane.add(motionBtn, 0, 2);
 			mainPane.add(status, 0, 3);
 
-			//action listeners
+			// action listeners
 			zone1.setOnAction(this);
 			zone2.setOnAction(this);
 			zone3.setOnAction(this);
@@ -129,10 +130,11 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getSource().equals(stay)) {
-			//TODO
+			// TODO
 		}
 		if (event.getSource().equals(away)) {
-			//we might have to move timer into context and use clock class like in the book?
+			// we might have to move timer into context and use clock class like in the
+			// book?
 			time = 60;
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
@@ -156,7 +158,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	}
 
 	private boolean isAnyDoorOpen() {
-		if (!zone1.isSelected() || !zone2.isSelected() || !zone3.isSelected()) {
+		if (zone1.isSelected() && zone2.isSelected() && zone3.isSelected()) {
 			return true;
 		}
 		return false;
@@ -164,16 +166,17 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 
 	public static void main(String[] args) {
 		securitySystem = SecuritySystemContext.getInstance();
+		securitySystem.makeStates();
 		display.setsDisplay();
 		Application.launch(args);
 	}
 
-	//sends a reference of itself to SS
+	// sends a reference of itself to SS
 	public void setsDisplay() {
 		securitySystem.setDisplay(this);
 	}
 
-	//test method TODO: delete
+	// test method TODO: delete
 	public void printStuff() {
 		System.out.println("Calling method from outside class");
 	}

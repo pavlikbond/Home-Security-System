@@ -1,10 +1,18 @@
 package States;
 
+import HomeSecurity.SecuritySystemContext;
+
 public class Away extends HomeSecurityState {
+
+	SecuritySystemContext securitySystem;
+
+	public Away(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
 
 	@Override
 	public void zonesOpen() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getCounting());
 
 	}
 
@@ -34,13 +42,13 @@ public class Away extends HomeSecurityState {
 
 	@Override
 	public void motionDetected() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getCounting());
 
 	}
 
 	@Override
 	public void passwordCorrect() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getDisarmed());
 
 	}
 

@@ -1,6 +1,14 @@
 package States;
 
+import HomeSecurity.SecuritySystemContext;
+
 public class ZonesOpen extends HomeSecurityState {
+
+	SecuritySystemContext securitySystem;
+
+	public ZonesOpen(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
 
 	@Override
 	public void zonesOpen() {

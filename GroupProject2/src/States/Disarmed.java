@@ -1,6 +1,14 @@
 package States;
 
+import HomeSecurity.SecuritySystemContext;
+
 public class Disarmed extends HomeSecurityState {
+
+	SecuritySystemContext securitySystem;
+
+	public Disarmed(SecuritySystemContext securitySystem) {
+		this.securitySystem = securitySystem;
+	}
 
 	@Override
 	public void zonesOpen() {
@@ -16,7 +24,7 @@ public class Disarmed extends HomeSecurityState {
 
 	@Override
 	public void pressStay() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getStay());
 
 	}
 
@@ -28,7 +36,7 @@ public class Disarmed extends HomeSecurityState {
 
 	@Override
 	public void pressAway() {
-		// TODO Auto-generated method stub
+		securitySystem.changeCurrentState(securitySystem.getAway());
 
 	}
 
