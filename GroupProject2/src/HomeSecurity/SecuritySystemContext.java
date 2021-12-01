@@ -42,7 +42,7 @@ public class SecuritySystemContext {
 		this.warning = new Warning(this);
 		this.disarmed = new Disarmed(this);
 		this.stay = new Stay(this);
-		currentState = stay;
+		currentState = disarmed;
 	}
 
 	// singleton
@@ -115,7 +115,7 @@ public class SecuritySystemContext {
 	}
 
 	public void displayState() {
-		display.display(currentState.toString());
+		display.setStatus();
 	}
 
 	public void setDoorsOpen(boolean status) {

@@ -157,12 +157,11 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		securitySystem.setDisplay(this);
 	}
 
-	// test method TODO: delete
-	public void printStuff() {
-		System.out.println("Calling method from outside class");
-	}
-
 	public void display(String string) {
 		text.setText(string);
+	}
+
+	public void setStatus() {
+		text.setText(securitySystem.getCurrentState().toString());
 	}
 }
