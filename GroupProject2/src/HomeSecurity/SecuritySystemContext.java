@@ -19,18 +19,9 @@ public class SecuritySystemContext {
 	private HomeSecurityState warning;
 	private HomeSecurityState disarmed;
 	private HomeSecurityState stay;
-	private boolean doorsOpen; //true means a door is open, false means a door is closed
+	private boolean doorsOpen; // true means a door is open, false means a door is closed
 
 	private SecuritySystemContext() {
-
-		// this.alerted = new Alerted(this);
-		// this.away = new Away(this);
-		// this.counting = new Counting(this);
-		// this.disarmed = new Disarmed(this);
-		// this.stay = new Stay(this);
-		// this.zonesClosed = new ZonesClosed(this);
-		// this.zonesOpen = new ZonesOpen(this);
-		// currentState = disarmed;
 		display = new Display();
 		display.setSecuritySystem(this);
 		timeLeft = 0;

@@ -13,7 +13,7 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void zonesOpen() {
 		securitySystem.changeCurrentState(securitySystem.getAlerted());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
@@ -37,15 +37,15 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
-		//if doors are open when timers runs out, change state to disarmed
+		// if doors are open when timers runs out, change state to disarmed
 		if (securitySystem.isDoorOpen()) {
 			securitySystem.changeCurrentState(securitySystem.getDisarmed());
-			securitySystem.displayState();
+			// securitySystem.displayState();
 		}
 	}
 

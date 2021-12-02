@@ -16,16 +16,17 @@ public class Disarmed extends HomeSecurityState {
 
 	}
 
+	// displayState causes an error for some reason so I commented it out for now.
 	@Override
 	public void pressStay() {
 		securitySystem.changeCurrentState(securitySystem.getStay());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
 	public void pressAway() {
 		securitySystem.changeCurrentState(securitySystem.getAway());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override

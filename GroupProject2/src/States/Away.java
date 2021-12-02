@@ -13,12 +13,12 @@ public class Away extends HomeSecurityState {
 	@Override
 	public void zonesOpen() {
 		securitySystem.changeCurrentState(securitySystem.getWarning());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
 	public void pressStay() {
-		//nothing happens
+		// nothing happens
 	}
 
 	@Override
@@ -29,20 +29,20 @@ public class Away extends HomeSecurityState {
 	@Override
 	public void motionDetected() {
 		securitySystem.changeCurrentState(securitySystem.getWarning());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-		securitySystem.displayState();
+		// securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
 		if (securitySystem.isDoorOpen()) {
 			securitySystem.changeCurrentState(securitySystem.getDisarmed());
-			securitySystem.displayState();
+			// securitySystem.displayState();
 		}
 	}
 

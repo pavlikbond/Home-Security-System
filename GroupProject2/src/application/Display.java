@@ -31,6 +31,18 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	private Button motionBtn;
 	private TextField text;
 
+	private Button button0 = new Button("0");
+	private Button button1 = new Button("1");
+	private Button button2 = new Button("2");
+	private Button button3 = new Button("3");
+	private Button button4 = new Button("4");
+	private Button button5 = new Button("5");
+	private Button button6 = new Button("6");
+	private Button button7 = new Button("7");
+	private Button button8 = new Button("8");
+	private Button button9 = new Button("9");
+	private String password = "";
+
 	public SecuritySystemContext getSecuritySystem() {
 		return securitySystem;
 	}
@@ -68,13 +80,28 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 
 			// Here is the Number Pad, I do have two blank buttons on there though. Got to
 			// fix that
-			String[] keys = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 			GridPane numPad = new GridPane();
-			for (int i = 0; i < 9; i++) {
-				Button button = new Button(keys[i]);
-				numPad.add(button, i % 3, (int) Math.ceil(i / 3));
-			}
-			Button button0 = new Button("0");
+
+			button0.setOnAction(this);
+			button1.setOnAction(this);
+			button2.setOnAction(this);
+			button3.setOnAction(this);
+			button4.setOnAction(this);
+			button5.setOnAction(this);
+			button6.setOnAction(this);
+			button7.setOnAction(this);
+			button8.setOnAction(this);
+			button9.setOnAction(this);
+
+			numPad.add(button1, 0, 0);
+			numPad.add(button2, 1, 0);
+			numPad.add(button3, 2, 0);
+			numPad.add(button4, 0, 1);
+			numPad.add(button5, 1, 1);
+			numPad.add(button6, 2, 1);
+			numPad.add(button7, 0, 2);
+			numPad.add(button8, 1, 2);
+			numPad.add(button9, 2, 2);
 			numPad.add(button0, 1, 3);
 
 			text = new TextField();
@@ -123,20 +150,97 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		if (event.getSource().equals(stay)) {
-			securitySystem.pressStay();
-		} else if (event.getSource().equals(away)) {
-			securitySystem.pressAway();
-		} else if (event.getSource().equals(motionBtn)) {
+		// Button 0
+		if (event.getSource().equals(button0)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 1
+		else if (event.getSource().equals(button1)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 2
+		else if (event.getSource().equals(button2)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 3
+		else if (event.getSource().equals(button3)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 4
+		else if (event.getSource().equals(button4)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 5
+		else if (event.getSource().equals(button5)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 6
+		else if (event.getSource().equals(button6)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 7
+		else if (event.getSource().equals(button7)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 8
+		else if (event.getSource().equals(button8)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Button 9
+		else if (event.getSource().equals(button9)) {
+			String value = ((Button) event.getSource()).getText();
+			password += value;
+			System.out.println(password);
+		}
+		// Stay
+		else if (event.getSource().equals(stay)) {
+			if (securitySystem.isDoorOpen()) {
+				securitySystem.pressStay();
+				text.setText(securitySystem.getCurrentState().toString());
+			}
+			System.out.println(securitySystem.getCurrentState().toString());
+		}
+		// Away
+		else if (event.getSource().equals(away)) {
+			if (securitySystem.isDoorOpen()) {
+				securitySystem.pressAway();
+				text.setText(securitySystem.getCurrentState().toString());
+			}
+		}
+		// Motion Detected
+		else if (event.getSource().equals(motionBtn)) {
 			securitySystem.motionDetected();
-		} else if (event.getSource().equals(zone1) || event.getSource().equals(zone2)
+			text.setText(securitySystem.getCurrentState().toString());
+		}
+		// Zone Change
+		else if (event.getSource().equals(zone1) || event.getSource().equals(zone2)
 				|| event.getSource().equals(zone3)) {
 			securitySystem.setDoorsOpen(isAnyDoorOpen());
+			securitySystem.zonesOpen();
+			text.setText(securitySystem.getCurrentState().toString());
 		}
-		//need event listeners for each numpad button and a system to track the password entered
-		//have to move the numbers out of the methods
-
 	}
+	// need event listeners for each numpad button and a system to track the
+	// password entered
+	// have to move the numbers out of the methods
 
 	private boolean isAnyDoorOpen() {
 		if (zone1.isSelected() && zone2.isSelected() && zone3.isSelected()) {
