@@ -41,6 +41,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	private Button button7 = new Button("7");
 	private Button button8 = new Button("8");
 	private Button button9 = new Button("9");
+	private final String checkPassword = "14741";
 	private String password = "";
 
 	public SecuritySystemContext getSecuritySystem() {
@@ -150,65 +151,75 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		// Button 0
+		// button 0
 		if (event.getSource().equals(button0)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 1
+		// button 1
 		else if (event.getSource().equals(button1)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 2
+		// button 2
 		else if (event.getSource().equals(button2)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 3
+		// button 3
 		else if (event.getSource().equals(button3)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 4
+		// button 4
 		else if (event.getSource().equals(button4)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 5
+		// button 5
 		else if (event.getSource().equals(button5)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 6
+		// button 6
 		else if (event.getSource().equals(button6)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 7
+		// button 7
 		else if (event.getSource().equals(button7)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 8
+		// button 8
 		else if (event.getSource().equals(button8)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
-		// Button 9
+		// button 9
 		else if (event.getSource().equals(button9)) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
-			System.out.println(password);
+			text.setText(password);
+			verifyPassword();
 		}
 		// Stay
 		else if (event.getSource().equals(stay)) {
@@ -216,7 +227,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 				securitySystem.pressStay();
 				text.setText(securitySystem.getCurrentState().toString());
 			}
-			System.out.println(securitySystem.getCurrentState().toString());
+			resetPassword();
 		}
 		// Away
 		else if (event.getSource().equals(away)) {
@@ -224,6 +235,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 				securitySystem.pressAway();
 				text.setText(securitySystem.getCurrentState().toString());
 			}
+			resetPassword();
 		}
 		// Motion Detected
 		else if (event.getSource().equals(motionBtn)) {
@@ -241,6 +253,26 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	// need event listeners for each numpad button and a system to track the
 	// password entered
 	// have to move the numbers out of the methods
+
+	// To reset password
+	public void resetPassword() {
+		password = "";
+	}
+
+	// Compares the password and displays correct or incorrect
+	public void verifyPassword() {
+		if (password.length() >= 5) {
+			if (password.equals(checkPassword)) {
+				text.setText("Password was correct!");
+				securitySystem.passwordCorrect();
+				text.setText(securitySystem.getCurrentState().toString());
+				resetPassword();
+			} else {
+				text.setText("Password is incorrect!");
+				resetPassword();
+			}
+		}
+	}
 
 	private boolean isAnyDoorOpen() {
 		if (zone1.isSelected() && zone2.isSelected() && zone3.isSelected()) {
