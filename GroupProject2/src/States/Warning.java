@@ -37,6 +37,7 @@ public class Warning extends HomeSecurityState {
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
+		securitySystem.getDisplay().getTimer().stop();
 		// securitySystem.displayState();
 	}
 

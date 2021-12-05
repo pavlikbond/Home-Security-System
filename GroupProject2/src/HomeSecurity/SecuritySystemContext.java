@@ -2,6 +2,8 @@ package HomeSecurity;
 
 import States.Alerted;
 import States.Away;
+import States.CountdownAway;
+import States.CountdownStay;
 import States.Disarmed;
 import States.HomeSecurityState;
 import States.Stay;
@@ -19,20 +21,25 @@ public class SecuritySystemContext {
 	private HomeSecurityState warning;
 	private HomeSecurityState disarmed;
 	private HomeSecurityState stay;
+	private HomeSecurityState countdownStay;
+	private HomeSecurityState countdownAway;
 	private boolean doorsOpen; // true means a door is open, false means a door is closed
 
 	private SecuritySystemContext() {
-		display = new Display();
-		display.setSecuritySystem(this);
+		// display = new Display();
+		// display.setSecuritySystem(this);
 		timeLeft = 0;
 	}
 
 	public void makeStates() {
+
 		this.alerted = new Alerted(this);
 		this.away = new Away(this);
 		this.warning = new Warning(this);
 		this.disarmed = new Disarmed(this);
 		this.stay = new Stay(this);
+		this.countdownStay = new CountdownStay(this);
+		this.countdownAway = new CountdownAway(this);
 		currentState = disarmed;
 	}
 
@@ -59,6 +66,10 @@ public class SecuritySystemContext {
 	// gets reference to Displa0 GUI object
 	public void setDisplay(Display display) {
 		this.display = display;
+	}
+
+	public Display getDisplay() {
+		return display;
 	}
 
 	public void zonesOpen() {
@@ -103,6 +114,14 @@ public class SecuritySystemContext {
 
 	public HomeSecurityState getStay() {
 		return stay;
+	}
+
+	public HomeSecurityState getCountdownStay() {
+		return countdownStay;
+	}
+
+	public HomeSecurityState getCountdownAway() {
+		return countdownAway;
 	}
 
 	public void displayState() {

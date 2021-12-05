@@ -3,6 +3,8 @@ package application;
 import java.util.concurrent.CountDownLatch;
 
 import HomeSecurity.SecuritySystemContext;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,12 +15,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Display extends Application implements EventHandler<ActionEvent> {
 	public static final CountDownLatch latch = new CountDownLatch(1);
 	public static Display display = null;
 
-	private int time;
+	private Integer time;
 
 	private static SecuritySystemContext securitySystem;
 	private CheckBox zone1 = new CheckBox("Zone 1");
@@ -43,6 +46,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	private Button button9 = new Button("9");
 	private final String checkPassword = "14741";
 	private String password = "";
+	Timeline timer;
 
 	public SecuritySystemContext getSecuritySystem() {
 		return securitySystem;
@@ -147,6 +151,8 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			e.printStackTrace();
 			System.out.println("Error in launch");
 		}
+
+		securitySystem.setDisplay(this);
 	}
 
 	@Override
@@ -225,7 +231,6 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		else if (event.getSource().equals(stay)) {
 			if (securitySystem.isDoorOpen()) {
 				securitySystem.pressStay();
-				text.setText(securitySystem.getCurrentState().toString());
 			}
 			resetPassword();
 		}
@@ -233,7 +238,6 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		else if (event.getSource().equals(away)) {
 			if (securitySystem.isDoorOpen()) {
 				securitySystem.pressAway();
-				text.setText(securitySystem.getCurrentState().toString());
 			}
 			resetPassword();
 		}
@@ -284,7 +288,6 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	public static void main(String[] args) {
 		securitySystem = SecuritySystemContext.getInstance();
 		securitySystem.makeStates();
-		display.setsDisplay();
 		Application.launch(args);
 	}
 
@@ -300,4 +303,34 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	public void setStatus() {
 		text.setText(securitySystem.getCurrentState().toString());
 	}
+
+	public void timer() {
+
+		timer = new Timeline();
+		timer.setCycleCount(Timeline.INDEFINITE);
+		time = 10;
+
+		text.setText(time.toString());
+		timer.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				time--;
+				text.setText(time.toString());
+
+				if (time <= 0) {
+					timer.stop();
+					if (isAnyDoorOpen() || securitySystem.getCurrentState().toString().compareTo("Warning") == 0) {
+						securitySystem.timerRunsOut();
+						text.setText(securitySystem.getCurrentState().toString());
+					}
+				}
+			}
+		}));
+
+		timer.playFromStart();
+	}
+
+	public Timeline getTimer() {
+		return timer;
+	}
+
 }

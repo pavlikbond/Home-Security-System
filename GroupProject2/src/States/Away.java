@@ -13,6 +13,7 @@ public class Away extends HomeSecurityState {
 	@Override
 	public void zonesOpen() {
 		securitySystem.changeCurrentState(securitySystem.getWarning());
+		securitySystem.getDisplay().timer();
 		// securitySystem.displayState();
 	}
 
@@ -29,6 +30,7 @@ public class Away extends HomeSecurityState {
 	@Override
 	public void motionDetected() {
 		securitySystem.changeCurrentState(securitySystem.getWarning());
+		securitySystem.getDisplay().timer();
 		// securitySystem.displayState();
 	}
 
