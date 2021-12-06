@@ -321,6 +321,9 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 					if (isAnyDoorOpen() || securitySystem.getCurrentState().toString().compareTo("Warning") == 0) {
 						securitySystem.timerRunsOut();
 						text.setText(securitySystem.getCurrentState().toString());
+					} else {
+						securitySystem.timerZoneOpen();
+						text.setText(securitySystem.getCurrentState().toString());
 					}
 				}
 			}

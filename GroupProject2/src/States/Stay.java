@@ -17,6 +17,11 @@ public class Stay extends HomeSecurityState {
 	}
 
 	@Override
+	public void timerZoneOpen() {
+
+	}
+
+	@Override
 	public void pressStay() {
 		// TODO Auto-generated method stub
 
@@ -43,10 +48,8 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void timerRunsOut() {
 		// if doors are open when timers runs out, change state to disarmed
-		if (securitySystem.isDoorOpen()) {
-			securitySystem.changeCurrentState(securitySystem.getDisarmed());
-			// securitySystem.displayState();
-		}
+
+		// securitySystem.displayState();
 	}
 
 	@Override

@@ -76,6 +76,10 @@ public class SecuritySystemContext {
 		currentState.zonesOpen();
 	}
 
+	public void timerZoneOpen() {
+		currentState.timerZoneOpen();
+	}
+
 	public void pressStay() {
 		currentState.pressStay();
 	}

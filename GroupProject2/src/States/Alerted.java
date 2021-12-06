@@ -17,6 +17,11 @@ public class Alerted extends HomeSecurityState {
 	}
 
 	@Override
+	public void timerZoneOpen() {
+
+	}
+
+	@Override
 	public void pressStay() {
 		// TODO Auto-generated method stub
 

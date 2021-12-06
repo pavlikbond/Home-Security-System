@@ -18,6 +18,11 @@ public class Away extends HomeSecurityState {
 	}
 
 	@Override
+	public void timerZoneOpen() {
+
+	}
+
+	@Override
 	public void pressStay() {
 		// nothing happens
 	}
@@ -42,10 +47,7 @@ public class Away extends HomeSecurityState {
 
 	@Override
 	public void timerRunsOut() {
-		if (securitySystem.isDoorOpen()) {
-			securitySystem.changeCurrentState(securitySystem.getDisarmed());
-			// securitySystem.displayState();
-		}
+
 	}
 
 	@Override

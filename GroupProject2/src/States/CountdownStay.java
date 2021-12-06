@@ -15,6 +15,11 @@ public class CountdownStay extends HomeSecurityState {
 	}
 
 	@Override
+	public void timerZoneOpen() {
+		securitySystem.changeCurrentState(securitySystem.getDisarmed());
+	}
+
+	@Override
 	public void pressStay() {
 		// TODO Auto-generated method stub
 

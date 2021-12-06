@@ -12,7 +12,11 @@ public class Disarmed extends HomeSecurityState {
 
 	@Override
 	public void zonesOpen() {
-		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void timerZoneOpen() {
 
 	}
 

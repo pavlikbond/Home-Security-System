@@ -12,7 +12,7 @@ public abstract class HomeSecurityState {
 	public void zonesOpen() {
 	};
 
-	public void zonesClose() {
+	public void timerZoneOpen() {
 	};
 
 	public void pressStay() {
@@ -35,4 +35,5 @@ public abstract class HomeSecurityState {
 
 	public void timerRunsOut() {
 	};
+
 }
