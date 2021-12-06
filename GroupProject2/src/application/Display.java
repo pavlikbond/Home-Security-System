@@ -56,24 +56,6 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		this.securitySystem = securitySystem;
 	}
 
-	public static Display waitForDisplay() {
-		try {
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return display;
-	}
-
-	public static void setDisplay(Display setDisplay) {
-		display = setDisplay;
-		latch.countDown();
-	}
-
-	public Display() {
-		setDisplay(this);
-	}
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -303,15 +285,6 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		securitySystem = SecuritySystemContext.getInstance();
 		securitySystem.makeStates();
 		Application.launch(args);
-	}
-
-	// sends a reference of itself to SS
-	public void setsDisplay() {
-		securitySystem.setDisplay(this);
-	}
-
-	public void display(String string) {
-		text.setText(string);
 	}
 
 	//timer method
