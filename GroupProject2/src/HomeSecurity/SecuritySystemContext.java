@@ -59,10 +59,6 @@ public class SecuritySystemContext {
 		return this.currentState;
 	}
 
-	public void clockTicked() {
-
-	}
-
 	// gets reference to Displa0 GUI object
 	public void setDisplay(Display display) {
 		this.display = display;
@@ -126,10 +122,6 @@ public class SecuritySystemContext {
 
 	public HomeSecurityState getCountdownAway() {
 		return countdownAway;
-	}
-
-	public void displayState() {
-		display.setStatus();
 	}
 
 	public void setDoorsOpen(boolean status) {

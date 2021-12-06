@@ -10,16 +10,6 @@ public class Disarmed extends HomeSecurityState {
 		this.securitySystem = securitySystem;
 	}
 
-	@Override
-	public void zonesOpen() {
-
-	}
-
-	@Override
-	public void timerZoneOpen() {
-
-	}
-
 	// displayState causes an error for some reason so I commented it out for now.
 	@Override
 	public void pressStay() {
@@ -33,24 +23,6 @@ public class Disarmed extends HomeSecurityState {
 		securitySystem.changeCurrentState(securitySystem.getCountdownAway());
 		securitySystem.getDisplay().timer();
 		// securitySystem.displayState();
-	}
-
-	@Override
-	public void motionDetected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void passwordCorrect() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void timerRunsOut() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

@@ -158,70 +158,70 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		// button 0
-		if (event.getSource().equals(button0)) {
+		if (event.getSource().equals(button0) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 1
-		else if (event.getSource().equals(button1)) {
+		else if (event.getSource().equals(button1) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 2
-		else if (event.getSource().equals(button2)) {
+		else if (event.getSource().equals(button2) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 3
-		else if (event.getSource().equals(button3)) {
+		else if (event.getSource().equals(button3) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 4
-		else if (event.getSource().equals(button4)) {
+		else if (event.getSource().equals(button4) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 5
-		else if (event.getSource().equals(button5)) {
+		else if (event.getSource().equals(button5) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 6
-		else if (event.getSource().equals(button6)) {
+		else if (event.getSource().equals(button6) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 7
-		else if (event.getSource().equals(button7)) {
+		else if (event.getSource().equals(button7) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 8
-		else if (event.getSource().equals(button8)) {
+		else if (event.getSource().equals(button8) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
 			verifyPassword();
 		}
 		// button 9
-		else if (event.getSource().equals(button9)) {
+		else if (event.getSource().equals(button9) && allowPasword()) {
 			String value = ((Button) event.getSource()).getText();
 			password += value;
 			text.setText(password);
@@ -253,10 +253,15 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 			securitySystem.zonesOpen();
 			text.setText(securitySystem.getCurrentState().toString());
 		}
+		//if cancel is pressed
+		else if (event.getSource().equals(cancel) && allowPasword()) {
+			if (!text.getText().equals("Password is incorrect!")) {
+				text.setText("Enter Password");
+			} else {
+				text.setText(securitySystem.getCurrentState().toString());
+			}
+		}
 	}
-	// need event listeners for each numpad button and a system to track the
-	// password entered
-	// have to move the numbers out of the methods
 
 	// To reset password
 	public void resetPassword() {
@@ -278,6 +283,15 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		}
 	}
 
+	//check if in countdown, if so return false, which will not allow cancel button to work
+	private boolean allowPasword() {
+		if (securitySystem.getCurrentState().toString().equals("Countdown")) {
+			return false;
+		}
+		return true;
+	}
+
+	//checks to see if any of the doors are open
 	private boolean isAnyDoorOpen() {
 		if (zone1.isSelected() && zone2.isSelected() && zone3.isSelected()) {
 			return true;
@@ -300,10 +314,7 @@ public class Display extends Application implements EventHandler<ActionEvent> {
 		text.setText(string);
 	}
 
-	public void setStatus() {
-		text.setText(securitySystem.getCurrentState().toString());
-	}
-
+	//timer method
 	public void timer() {
 
 		timer = new Timeline();

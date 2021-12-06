@@ -18,21 +18,6 @@ public class Away extends HomeSecurityState {
 	}
 
 	@Override
-	public void timerZoneOpen() {
-
-	}
-
-	@Override
-	public void pressStay() {
-		// nothing happens
-	}
-
-	@Override
-	public void pressAway() {
-		// nothing happens
-	}
-
-	@Override
 	public void motionDetected() {
 		securitySystem.changeCurrentState(securitySystem.getWarning());
 		securitySystem.getDisplay().timer();
@@ -43,11 +28,6 @@ public class Away extends HomeSecurityState {
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
 		// securitySystem.displayState();
-	}
-
-	@Override
-	public void timerRunsOut() {
-
 	}
 
 	@Override
