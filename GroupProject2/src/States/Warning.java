@@ -14,13 +14,11 @@ public class Warning extends HomeSecurityState {
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
 		securitySystem.getDisplay().getTimer().stop();
-		// securitySystem.displayState();
 	}
 
 	@Override
 	public void timerRunsOut() {
 		securitySystem.changeCurrentState(securitySystem.getAlerted());
-		// securitySystem.displayState();
 	}
 
 	@Override

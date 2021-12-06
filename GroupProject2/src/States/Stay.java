@@ -13,13 +13,11 @@ public class Stay extends HomeSecurityState {
 	@Override
 	public void zonesOpen() {
 		securitySystem.changeCurrentState(securitySystem.getAlerted());
-		// securitySystem.displayState();
 	}
 
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-		// securitySystem.displayState();
 	}
 
 	@Override

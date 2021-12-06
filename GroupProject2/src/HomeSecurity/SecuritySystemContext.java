@@ -11,7 +11,6 @@ import States.Warning;
 import application.Display;
 
 public class SecuritySystemContext {
-	private int timeLeft;
 	private HomeSecurityState currentState;
 	private static SecuritySystemContext instance;
 	private Display display;
@@ -26,9 +25,6 @@ public class SecuritySystemContext {
 	private boolean doorsOpen; // true means a door is open, false means a door is closed
 
 	private SecuritySystemContext() {
-		// display = new Display();
-		// display.setSecuritySystem(this);
-		timeLeft = 0;
 	}
 
 	public void makeStates() {

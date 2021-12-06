@@ -13,7 +13,6 @@ public class Alerted extends HomeSecurityState {
 	@Override
 	public void passwordCorrect() {
 		securitySystem.changeCurrentState(securitySystem.getDisarmed());
-		// securitySystem.displayState();
 	}
 
 	@Override
